@@ -10,18 +10,18 @@ import numpy as np
 FS = 48_000
 SYMBOL_SEC = 0.125
 BIT_LENGTH = 7
-OUTPUT_DIR = "7bit_18.5k-19.5k"
+OUTPUT_DIR = os.path.join("signal", "7bit_19k-20k")
 
 AMPLITUDE = 0.5
 FADE_MS = 3
 
 # 値 → 周波数
 VALUE_TO_FREQ = {
-    0: 18_500,
-    1: 18_750,
-    2: 19_000,
-    3: 19_250,
-    4: 19_500,
+    0: 19_000,
+    1: 19_250,
+    2: 19_500,
+    3: 19_750,
+    4: 20_000,
 }
 
 # 偶数列: 0bit / 1bit をどの値にするか
@@ -41,11 +41,11 @@ ODD_COLUMN_VALUE = {
 }
 
 TEST_TONES = {
-    "test_18500.wav": 18_500,
-    "test_18750.wav": 18_750,
     "test_19000.wav": 19_000,
     "test_19250.wav": 19_250,
     "test_19500.wav": 19_500,
+    "test_19750.wav": 19_750,
+    "test_20000.wav": 20_000,
 }
 
 
@@ -141,7 +141,7 @@ def generate_command_signal(bits: str) -> np.ndarray:
 
     symbols = []
 
-    # 1列目: START = 0 = 18.50kHz
+    # 1列目: START = 0 = 19.00kHz
     start_freq = VALUE_TO_FREQ[0]
     start_symbol = sine_wave(start_freq, SYMBOL_SEC, FS)
     start_symbol = apply_fade(start_symbol, FS, FADE_MS)

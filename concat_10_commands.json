@@ -1,0 +1,65 @@
+{
+  "output": "signal/combined_10_commands.wav",
+  "files": [
+    {
+      "id": 0,
+      "bits": "0000000",
+      "note": "全部0、最小値",
+      "path": "signal/7bit_18.5k-19.5k/0000000.wav"
+    },
+    {
+      "id": 127,
+      "bits": "1111111",
+      "note": "全部1、最大値",
+      "path": "signal/7bit_18.5k-19.5k/1111111.wav"
+    },
+    {
+      "id": 42,
+      "bits": "0101010",
+      "note": "0/1が交互、切り替わり多め",
+      "path": "signal/7bit_18.5k-19.5k/0101010.wav"
+    },
+    {
+      "id": 85,
+      "bits": "1010101",
+      "note": "42の反転パターン",
+      "path": "signal/7bit_18.5k-19.5k/1010101.wav"
+    },
+    {
+      "id": 15,
+      "bits": "0001111",
+      "note": "前半0、後半1",
+      "path": "signal/7bit_18.5k-19.5k/0001111.wav"
+    },
+    {
+      "id": 112,
+      "bits": "1110000",
+      "note": "15の反転寄り",
+      "path": "signal/7bit_18.5k-19.5k/1110000.wav"
+    },
+    {
+      "id": 51,
+      "bits": "0110011",
+      "note": "2個単位で切り替わる",
+      "path": "signal/7bit_18.5k-19.5k/0110011.wav"
+    },
+    {
+      "id": 76,
+      "bits": "1001100",
+      "note": "51の反転寄り",
+      "path": "signal/7bit_18.5k-19.5k/1001100.wav"
+    },
+    {
+      "id": 31,
+      "bits": "0011111",
+      "note": "1が多めの偏り",
+      "path": "signal/7bit_18.5k-19.5k/0011111.wav"
+    },
+    {
+      "id": 96,
+      "bits": "1100000",
+      "note": "0が多めの偏り",
+      "path": "signal/7bit_18.5k-19.5k/1100000.wav"
+    }
+  ]
+}

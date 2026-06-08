@@ -1,4 +1,4 @@
 # Ignore generated signal WAV files
-7bit_18.5k-19.5k/
+signal/
 
 env/
