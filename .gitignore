@@ -1,4 +1,6 @@
 # Ignore generated signal WAV files
 signal/
 
+received_command/
+
 env/

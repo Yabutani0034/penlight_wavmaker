@@ -9,9 +9,11 @@ from serial import SerialException
 
 PORT = "COM6"
 BAUDRATE = 115200
-OUTPUT_DIR = Path(r"C:\Users\0108411501\OneDrive - Sony\code\laboratory\AAI\balloon\penlight_wavmaker\received_command")
+OUTPUT_DIR = Path(
+    r"C:\Users\0108411501\OneDrive - Sony\code\laboratory\AAI\balloon\penlight_wavmaker\received_command"
+)
 
-COMMAND_LINE_PATTERN = re.compile(r"^\[OK\].*\bcommand=(\d+)\b")
+COMMAND_LINE_PATTERN = re.compile(r"^received command=(\d+)$")
 
 
 def save_commands(commands: list[int]) -> Path:
@@ -19,7 +21,10 @@ def save_commands(commands: list[int]) -> Path:
 
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S_%f")
     output_file = OUTPUT_DIR / f"commands_{timestamp}.txt"
-    output_file.write_text("\n".join(str(command) for command in commands) + "\n", encoding="utf-8")
+    output_file.write_text(
+        "\n".join(str(command) for command in commands) + "\n",
+        encoding="utf-8",
+    )
 
     return output_file
 
@@ -46,14 +51,18 @@ def main() -> int:
                 line = serial_port.readline().decode("utf-8", errors="ignore").strip()
                 if line:
                     handle_line(line, commands)
+
     except KeyboardInterrupt:
         print("stopped")
+
         if commands:
             output_file = save_commands(commands)
             print(f"saved {len(commands)} commands: {output_file}")
         else:
             print("no commands received")
+
         return 0
+
     except SerialException as error:
         print(f"serial error: {error}", file=sys.stderr)
         return 1
