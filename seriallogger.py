@@ -1,10 +1,12 @@
 from datetime import datetime
 from pathlib import Path
+import argparse
 import re
 import sys
 
 import serial
 from serial import SerialException
+from serial.tools import list_ports
 
 
 PORT = "COM6"
@@ -14,6 +16,18 @@ OUTPUT_DIR = Path(
 )
 
 COMMAND_LINE_PATTERN = re.compile(r"^received command=(\d+)$")
+
+
+def available_ports() -> list[str]:
+    return [port.device for port in list_ports.comports()]
+
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description="Log received command values from a serial port.")
+    parser.add_argument("--port", default=PORT, help=f"serial port to open (default: {PORT})")
+    parser.add_argument("--baudrate", type=int, default=BAUDRATE, help=f"baudrate (default: {BAUDRATE})")
+    parser.add_argument("--list-ports", action="store_true", help="show available serial ports and exit")
+    return parser.parse_args()
 
 
 def save_commands(commands: list[int]) -> Path:
@@ -40,11 +54,18 @@ def handle_line(line: str, commands: list[int]) -> None:
 
 
 def main() -> int:
+    args = parse_args()
+
+    if args.list_ports:
+        ports = available_ports()
+        print("available ports: " + (", ".join(ports) if ports else "none"))
+        return 0
+
     commands: list[int] = []
 
     try:
-        with serial.Serial(PORT, BAUDRATE, timeout=1) as serial_port:
-            print(f"listening on {PORT} at {BAUDRATE} baud")
+        with serial.Serial(args.port, args.baudrate, timeout=1) as serial_port:
+            print(f"listening on {args.port} at {args.baudrate} baud")
             print(f"output directory: {OUTPUT_DIR}")
 
             while True:
@@ -65,6 +86,8 @@ def main() -> int:
 
     except SerialException as error:
         print(f"serial error: {error}", file=sys.stderr)
+        ports = available_ports()
+        print("available ports: " + (", ".join(ports) if ports else "none"), file=sys.stderr)
         return 1
 
 
